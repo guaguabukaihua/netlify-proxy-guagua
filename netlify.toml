@@ -1,40 +1,11 @@
-# 修改后的 netlify.toml
 [[headers]]
   for = "/*"
-  [headers.values]
+    [headers.values]
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Headers = "*"
     Access-Control-Allow-Methods = "*"
-
-# 静态资源优先路由
-[[redirects]]
-  from = "/assets/*"
-  to = "/assets/:splat"
-  status = 200
-  force = false
-
-# API 请求代理路由
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/proxy/:splat"  # 使用:splat保留路径参数
-  status = 200
-  force = true
-
-# SPA 应用路由（单页应用适用）
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/proxy"
   status = 200
-  force = false
-
-# 构建配置
-[build]
-  functions = "netlify/functions"  # 确保路径正确
-  publish = "dist"                 # 静态文件目录
-
-# 开发服务器配置
-[dev]
-  command = "npm run dev"          # 您的启动命令
-  port = 8888
-  targetPort = 3999                # 匹配日志中的端口
-  publish = "dist"
+  force = true
